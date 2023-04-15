@@ -139,4 +139,33 @@ router.post("/getuser", fetchuser, async (req, res) => {
     res.status(500).send("internal server error occured");
   }
 });
+
+router.post("/addscore",  body("email"),
+    body("score"),async (req, res) => {
+  try {
+   let user = await UserCollection.findOne({ email:req.body.email });
+    user.score = req.body.score;
+    await user.save()
+    res.json({sucess:true, user });
+    console.log(user)
+  }
+  catch(error) {
+    console.log(error)
+  }
+})
+
+router.post(
+  "/getallscores",
+  async (req, res) => {
+    try {
+    
+      const users=await UserCollection.find()
+      res.json(users);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("some error occured");
+    }
+  }
+);
+
 module.exports = router;
