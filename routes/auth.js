@@ -39,6 +39,7 @@ router.post(
         name: req.body.name,
         password: secpass,
         email: req.body.email,
+        score: 0
       });
 
       const data = {
